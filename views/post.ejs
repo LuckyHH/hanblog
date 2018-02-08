@@ -1,0 +1,72 @@
+<div class="all_post_brief">
+	<%
+		idxn = +idxn;
+		var k = 0;
+		for(var i = idxn*10 ; i < posts.length ; i++){
+			k++;
+			if(k%11!=0){
+	%>
+		<section class="content">
+			<h1><a href="/artical_detiail/<%=posts[i].user%>/<%=posts[i].id%>" class="article_title"><%=posts[i].title%></a></h1>
+
+			<p class="article_content"><%=posts[i].brief%></p>
+
+			<p><a href="/artical_detiail/<%=posts[i].user%>/<%=posts[i].id%>" class="amore_link">👉继续阅读</a></p>
+			<span class="meta">
+
+				 <%if(posts[i].update_time){%>
+			   		<time class="time">更新于<%=posts[i].update_time%></time>
+         <%}else{%>
+						<time class="time">发表于<%=posts[i].time%></time>
+				 <%}%>
+
+			</span>
+
+			<span class="tag">
+				<%if(posts[i].tags){
+						for(var j = 0 ; j < posts[i].tags.length;j++){
+				%>
+					 <a href="/tags/<%=posts[i].tags[j]%>" class="tagLink"><%=posts[i].tags[j]%></a>
+				<%
+			     }
+				 }
+				%>
+			</span>
+		</section>
+	<%
+			var nextURL = '',backURL = '';
+			if(src){
+				nextURL = '/tags/'+title+'/'+(idxn+1);
+				backURL = '/tags/'+title+'/'+(idxn-1);
+			}else{
+				nextURL = '/idx/'+(idxn+1);
+				backURL = '/idx/'+(idxn-1);
+			}
+			if((i == posts.length-1)&&i!=0&&idxn!=0){
+	%>
+			<div class="next">
+				<a href="<%=backURL%>" class="up_page">上一页</a>
+			</div>
+	<%		break;
+			}
+			}else{
+	%>
+			<div class="next">
+	<%
+			if(idxn!=0){
+	%>
+					<a href="<%=backURL%>" class="up_page">上一页</a>
+	<%
+			}
+			if(i!=posts.length-1){
+	%>
+					<a href="<%=nextURL%>"  class="down_page">下一页</a>
+	<%
+			}
+	%>
+			</div>
+	<%
+
+		break;}};
+	%>
+</div>

@@ -1,0 +1,28 @@
+<%include manage_head.ejs%>
+<table id="comment_table">
+	<tr>
+		<td>用户名</td>
+		<td>邮箱</td>
+		<td>网址</td>
+		<td>内容</td>
+		<td>时间</td>
+		<td>来源</td>
+		<td>操作</td>
+	</tr>
+<%
+	comments.forEach(function(comment,index){
+%>	
+	<tr>
+		<td style="width: 10%"><%=comment.user%></td>
+		<td style="width: 10%"><%=comment.email%></td>
+		<td style="width: 10%"><%=comment.website%></td>	
+		<td style="width: 40%"><%=comment.post%></td>
+		<td style="width: 10%"><%=comment.time%></td>
+		<td style="width: 10%"><%=comment.artical_id%></td>
+		<td style="width: 10%"><a href="/comment/delete/<%=comment.time%>">删除</a></td>
+	</tr>
+<%
+	})
+%>
+</table>
+<%include manage_foot.ejs%>

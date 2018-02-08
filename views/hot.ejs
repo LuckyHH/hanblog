@@ -1,0 +1,28 @@
+<%include head.ejs%>
+	<table  style="text-align: center;" id="hot">
+		<tr>
+			<td>排行</td>
+			<td>文章</td>
+			<td>访问量</td>
+			<td>赞</td>
+			<td>踩</td>
+		</tr>
+		<%
+			for(var i = 0 ; i < 20 && i < _clicks.length; i++){
+				for(var j = 0 ; j < posts.length ; j++){
+						if(_clicks[i].id == posts[j].id){
+		%>
+			<tr>
+				<td><%=i+1%></td>
+				<td><%=posts[j].title%></td>
+				<td><%=_clicks[i].click%></td>
+				<td><%=_clicks[i].zan%></td>
+				<td><%=_clicks[i].cai%></td>
+			</tr>
+		<%
+						}
+				}
+			}
+		%>
+	</table>
+<%include foot.ejs%>

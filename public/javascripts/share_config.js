@@ -1,0 +1,1 @@
+var ititle=document.getElementById("artical_detiail_title"),post_brief=document.getElementById("post_brief"),share=new SimpleShare({url:location.href,title:ititle.innerHTML,content:post_brief.innerHTML});

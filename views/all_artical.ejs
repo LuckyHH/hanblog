@@ -1,0 +1,45 @@
+<%include manage_head.ejs%>
+<table id='itable'>
+	<tr class="manage_row">
+		<td class="artical_user">文章</td>
+		<td class="artical_index">ID</td>
+		<td class="artical_title">文章列表</td>
+		<td class="post_date">日期</td>
+		<td class="artical_fang">访客数</td>
+		<td class="zan">赞</td>
+		<td class="cai">踩</td>
+		<td class="artical_comment">评论数</td>		
+		<td class="artical_edit">编辑</td>
+		<td class="artical_delete">删除</td>
+	</tr>
+
+	<%
+		for(var i = 0 ; i < posts.length ; i++){
+			for(var j = 0 ; j < _clicks.length ; j++){
+				if(_clicks[j].id === posts[i].id){
+					var post = posts[i],comment_count = comments[i];
+	%>
+	<tr>
+		<td><%=post.index%></td>
+		<td><%=post.id%></td>
+		<td>
+<a href= "/artical_detiail/<%=post.user%>/<%=post.id%>"><%=post.title %></a>
+		</td>
+		
+		<td><%=post.time %></td>
+		<td><%=_clicks[j].click%></td>
+		<td><%=_clicks[j].zan%></td>
+		<td><%=_clicks[j].cai%></td>
+		<td><%=comment_count%></td>
+		<td><a href="/update/<%=post.user%>/<%=post.id%>">编辑</a></td>
+		<td><a href="/delete/<%=post.user%>/<%=post.title%>">删除</a></td>
+	</tr>
+
+	<%	
+			}
+			continue;
+		}
+	}
+	%>
+</table>
+<%include manage_foot.ejs%>

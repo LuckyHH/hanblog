@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+	<meta name="description" content="月光博客（www.docmobile.cn）是一个技术性个人博客。主要包括前端，linux相关，网络知识慢生活感想等内容" />
+	<meta name="keywords" content="月光博客,博客,luckyhh,学生,石河子大学,docmobile,前端,JavaScript,linux,生活杂谈,笔记,网络">
+  <title><%=title%>-luckyhh-月光博客</title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+	<script type="text/javascript" src="/javascripts/ku.js"></script>
+	<script type="text/javascript" src="/javascripts/css.js" defer></script>
+	<script type="text/javascript" src="/javascripts/sidebar.js" defer></script>
+</head>
+<body id="wrap">
+	<div class="left">
+		<div class="left_wrap">
+			<div class="left_head">
+				<a href="/idx/0" class="header_img"></a>
+			</div>
+			<h1>月光博客</h1>
+			<nav>
+				<a href="/idx/0">首页</a>
+				<a href="/about">关于</a>
+				<a href="/archive">归档</a>
+				<a href="/link">链接</a>
+				<a href="/comment">留言</a>
+			</nav>
+			<div class="share_bar">
+				<img src="/images/weibo.png" class="btn btn1" alt="微博">
+				<img src="/images/wechat.png" class="btn btn2" alt="微信">
+				<img src="/images/qq.png" class="btn btn3" alt="QQ">
+			</div>
+			<div class="sidebar">
+				<div class="move_box"></div>
+			</div>
+		</div>
+	</div>
+
+<!-- 由于历史原因，这里其实是中间部分 -->
+	<div class="right">
+	    <% if (success) { %>
+	    <div class="alert alert-success">
+	        <%= success %>
+	    </div>
+	    <% } %>
+	    <% if (error) { %>
+	    <div class="alert alert-error">
+	        <%= error %>
+	    </div> <% } %>
+		<div class="right_wrap" id="content">

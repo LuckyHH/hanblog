@@ -1,0 +1,13 @@
+<%include manage_head.ejs%>	
+	<div id="panle">
+		<p id="message"></p>
+		<form method="post" action="/edit_user">
+				<p>输入旧密码：<input type="password" name="pwd1" maxlength="20" minlength="6"></p>
+				<p>输入新密码：<input type="password" name="pwd2" maxlength="20" minlength="6"></p>
+				<p>确定新密码：<input type="password" name="pwd3" maxlength="20" minlength="6"></p>
+			<button type="submit" id="isubmit">提交</button>
+		</form>		
+	</div> 
+<script type="text/javascript" src="/javascripts/ku.js"></script>	
+<script type="text/javascript" src="/javascripts/change_pwd.js"></script>
+<%include manage_foot.ejs%>

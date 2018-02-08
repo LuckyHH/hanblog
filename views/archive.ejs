@@ -1,0 +1,49 @@
+<%include head.ejs%>
+<div id="collection">
+		<h1>归档</h1>
+
+<%
+	var all_month = [];
+    var _unique = function(obj){
+        return obj.filter(function(item,idx){
+                return obj.indexOf(item) === idx;
+        })
+    }
+
+	posts.forEach(function(post,index){
+		all_month.push(post.time.substr(0,7));
+	})
+    all_month = _unique(all_month);
+    all_month.sort(function(idx1,idx2){
+    	return idx1 < idx2 ;
+    })
+
+
+    for(var i = 0 ; i < all_month.length ; i++){
+%>
+		<div class="collection_item">
+
+			<div class="collection_time">
+				<%=all_month[i].substr(0,4)%>年<%=all_month[i].substr(5,3)%>月
+			</div>
+			<ul class="collection_content">
+<%
+	posts.forEach(function(post,index){
+			if(post.time.substr(0,7) == all_month[i]){
+%>
+			<li>
+				<p>
+						<a href= "/artical_detiail/<%=post.user%>/<%=post.id%>"><%=post.title %>　　　　<span>(<%=post.time%>)</span></a>
+				</p>
+			</li>
+<%
+     }
+	})
+%>
+</ul>
+</div>
+<%
+}
+%>
+</div>
+<%include foot.ejs%>

@@ -1,0 +1,21 @@
+<div class="comment_wrap" name="comment">
+	<div class="comment_total">共有<span class="comment_total_num"><%=comment.length%></span>条评论</div>
+
+<%
+	for(var i = 0 ; i < comment.length ; i++){
+%>
+
+
+	<div class="comment_board">
+		<a class="comment_user" href="<%=comment[i].website%>" target="_blank"><%=comment[i].user%></a>
+		<div class="comment_post"><%=comment[i].post%></div>
+		<p class="comment_time"><%=comment[i].time%><a href="/jubao" class="report" target="_blank">举报</a>　<span class="reply">回复</span></p>
+		<div class="temp"></div>
+	</div>
+<%
+};
+%>
+
+
+<div class="mytime" style="display: none"></div>
+</div>

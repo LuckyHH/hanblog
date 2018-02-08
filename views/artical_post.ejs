@@ -1,0 +1,93 @@
+<script src="/javascripts/editorTool.js"></script>
+<script src="/javascripts/editorConfig.js"></script>
+    <%include manage_head.ejs%>
+
+        <script id="editor" type="text/plain"></script>
+
+    <%if(post){%>
+        <div id="hidden_content" style="display: none;"><%=post[0].post%></div>
+    <%}%>
+
+    <form method="POST" class="artical_ipost">
+        <input type = "text" placeholder = "输入文章标题" class="iartical_title" name = "artical_title" value="<%if(post){%><%=post[0].title%><%}%>">
+
+        <textarea class="brief_introduction" placeholder="写一个介绍" name="brief_introduction"><%if(post){%><%=post[0].brief%><%}else{%>　　<%}%></textarea>
+
+        <textarea id = "html_content" name="html_content" style="display:none"></textarea>
+
+
+        <p class="tagsBtn hasTags">已有标签:
+            <%
+              var hasTagList = ''
+              for(var j = 0 ; j < mytagList.length ; j++){
+                  var tag = mytagList[j]+' ';
+                  hasTagList = hasTagList + tag;
+            %>
+                <button type="button" class="tagBtn"><%=mytagList[j]%></button>
+            <%
+              }
+            %>
+            <button type="button" class="clearBtn">清除已有标签</button>
+        </p>
+
+        <input type="text" name="tags" placeholder="点击标签类别" class="tags" value="<%=hasTagList%>" readonly/>
+
+	      <button type="submit" id="btn1">提交</button>
+    </form>
+
+    <p class="tagsBtn farButtom">
+      <%
+          for(var i = 0 ; i < tags.length ; i++){
+      %>
+            <button class="tagBtn"><%=tags[i]%></button>
+      <%
+          }
+      %>
+      <button class="plusBtn">+</button>
+    </p>
+    <%include manage_foot.ejs%>
+
+<script type="text/javascript">
+  var ue = UE.getEditor('editor');
+  var target = document.getElementById('hidden_content');
+  var tags = ku.getByClass('tags')[0];
+  var plusBtn = ku.getByClass('plusBtn')[0];
+  if(target){
+    ue.ready(function(){
+      setContent();
+    });
+  }
+  document.getElementById('btn1').addEventListener('click', function () {
+      document.getElementById('html_content').innerHTML = UE.getEditor('editor').getContent();
+  }, false);
+
+ (function(){
+   var ary = tags.value;
+   var tagsBtn = document.getElementsByClassName('tagsBtn');
+   var clearBtn = document.getElementsByClassName('clearBtn')[0];
+   tagsBtn[1].addEventListener('click',function(){
+     var e = event || window.event;
+     e.stopPropagation();
+     var btn = e.target;
+     if(btn.className === 'tagBtn'){
+       ary = ary + btn.innerHTML+' ';
+       tags.value = ary ;
+     }
+   });
+
+   clearBtn.addEventListener('click',function(){
+      tags.value = '';
+      ary = '';
+   })
+
+   plusBtn.addEventListener('click',function(){
+     var result = window.prompt("输入要创建的标签");
+     var newBtn = document.createElement('button');
+     newBtn.className = 'tagBtn';
+     newBtn.innerHTML = result;
+     tagsBtn.insertBefore(newBtn,plusBtn);
+   })
+ })();
+
+
+</script>

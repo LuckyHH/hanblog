@@ -1,0 +1,22 @@
+<%include manage_head.ejs%>
+<table id="IP_table">
+	<tr>
+		<td>IP</td>
+		<td>地址信息</td>
+		<td>网址</td>
+		<td>时间</td>
+	</tr>
+<%
+	ips.forEach(function(MyIp,idx){
+%>
+	<tr>
+		<td style="width: 20%"><%=MyIp.ip%></td>
+		<td style="width: 30%"><%=MyIp.from%></td>
+		<td style="width: 20%"><%=MyIp.url%></td>	
+		<td style="width: 30%"><%=MyIp.time%></td>
+	</tr>
+<%
+	})
+%>
+</table>
+<%include manage_foot.ejs%>

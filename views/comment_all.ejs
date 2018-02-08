@@ -1,0 +1,52 @@
+<div class="comment_wrap">
+	<div class="comment_total">共有<span class="comment_total_num"><%=comment.length%></span>条评论</div>
+
+<%
+	idxn = +idxn;
+	var k = 0;
+	for(var i = idxn*10 ; i < comment.length ; i++){
+		k++;
+		if(k%11!=0){
+%>
+
+
+	<div class="comment_board">
+		<a class="comment_user" href="<%=comment[i].website%>" target="_blank"><%=comment[i].user%></a>
+		<div class="comment_post"><%=comment[i].post%></div>
+		<p class="comment_time"><%=comment[i].time%><a href="/jubao" class="report" target="_blank">举报</a>　<span class="reply">回复</span></p>
+		<div class="temp"></div>
+	</div>
+
+
+<%
+		if((i == comment.length-1)&&i!=0&&idxn!=0){
+%>
+		<div class="next">
+			<a href="/comment/idx/<%=idxn-1%>" class="up_page">上一页</a>
+		</div>
+<%		break;
+		}
+		}else{
+%>
+		<div class="next">
+<%
+		if(idxn!=0){
+%>
+				<a href="/comment/idx/<%=idxn-1%>" class="up_page">上一页</a>
+<%
+		}
+		if(i!=comment.length-1){
+%>
+				<a href="/comment/idx/<%=idxn+1%>"  class="down_page">下一页</a>			
+<%
+		}	
+%>
+		</div>
+<%
+	
+	break;}};
+%>
+
+
+<div class="mytime" style="display: none"></div>
+</div>

@@ -1,0 +1,109 @@
+			<footer>
+				<p class="footer_copyright">©<span class="year">2018 </span><a href="/idx/0">月光博客</a> By<a href="/manage" class="foot_manage">手可摘星辰</a></p>
+				<p>晋ICP备17000375号 <span id="cnzz_stat_icon_1272813456"><a href="http://www.cnzz.com/stat/website.php?web_id=1272813456" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="http://icon.cnzz.com/img/pic.gif"></a></span></p>
+			</footer>
+		</div>
+	</div>
+</div>
+<div class="rightNav">
+		<div class="hotArtical">
+			<h2>热门文章</h2>
+			<div class="articalList">
+				<div class="scrollBox">
+					<ul>
+						<%
+									var count = 1;
+									for(var z = 0 ; z < _clicks.length && count <= 10; z++){
+										for(var ia = 0 ; ia < _posts.length ; ia++){
+											 if(_clicks[z].id === _posts[ia].id){
+
+						%>
+							 <li><span><%=count%><span>、<a href="/artical_detiail/<%=_posts[ia].user%>/<%=_posts[ia].id%>"><%=_posts[ia].title%></a></li>
+						<%
+										count++;}
+									}
+								}
+						%>
+					</ul>
+					<ul>
+						<%
+									console.log(count);
+									for(z; z < _clicks.length && count <= 20; z++){
+										for(var i = 0 ; i < _posts.length ; i++){
+											 if(_clicks[z].id === _posts[i].id){
+
+						%>
+							  <li><span><%=count%><span>、<a href="/artical_detiail/<%=_posts[i].user%>/<%=_posts[i].id%>"><%=_posts[i].title%></a></li>
+						<%
+										count++;}
+									}
+								}
+						%>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			   var scrollBox = ku.getByClass('scrollBox')[0];
+				 var _ul = scrollBox.getElementsByTagName('ul');
+				 var _ulHeight = parseInt(ku.getStyle(_ul[0],'height'));
+				 var _scrollBoxHeight = parseInt(ku.getStyle(scrollBox,'height'));
+				 var articalList = ku.getByClass('articalList')[0];
+
+				 var i = 0 ;
+				 var itimer = null;
+				 itimer = setInterval(function(){
+						scrollBox.style.top = (i = i - 1) + 'px';
+						if(scrollBox.style.top == -_ulHeight + 'px'){
+								var node = _ul[0].cloneNode(true);
+								scrollBox.removeChild(_ul[0]);
+								scrollBox.appendChild(node);
+								scrollBox.style.top = 0 +'px';
+								i=0;
+						}
+				},60);
+				articalList.onmouseenter = function(){
+					clearInterval(itimer);
+				}
+				articalList.onmouseleave = function(){
+					itimer = setInterval(function(){
+						 scrollBox.style.top = (i = i - 1) + 'px';
+						 if(scrollBox.style.top == -_ulHeight + 'px'){
+								 var node = _ul[0].cloneNode(true);
+								 scrollBox.removeChild(_ul[0]);
+								 scrollBox.appendChild(node);
+								 scrollBox.style.top = 0 +'px';
+								 i=0;
+						 }
+				 },60);
+				}
+
+
+		</script>
+
+		<div class="tagNav">
+			<h2>标签列表</h2>
+			<%
+					var tagList = [];
+					_posts.forEach(function(post){
+						post.tags.forEach(function(tag){
+							if(tagList.indexOf(tag) < 0){
+			%>
+							<a href="/tags/<%=tag%>" class="tagPanel"><%=tag%></a>
+			<%
+								tagList.push(tag);
+							}
+						});
+					});
+			%>
+		</div>
+		<div class="ad">
+			<h2>广告展示</h2>
+<a target="_blank" href="http://union.dangdang.com/transfer.php?from=P-337441&ad_type=30&sys_id=1&backurl=http%3A%2F%2Funion.dangdang.com%2Fddimg%2Furl%3Fid%3D115"><img src="http://union.dangdang.com/ddimg?id=115"  alt=" " border="0"/></a>
+
+		</div>
+</div>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272813456'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1272813456%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+</body>
+</html>

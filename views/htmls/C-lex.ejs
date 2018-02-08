@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>词法分析器</title>
+	<style type="text/css">
+		*{
+			padding: 0px;
+			margin: 0px;
+		}
+		#mianban{
+			margin: 0 auto;
+			width: 90%;
+			margin-top: 30px;
+		}
+		#input{
+			display: block;
+			width: 49%;
+			height: 100%;
+			float: left;
+			resize: none;
+			outline: none;
+			border: 1px solid black;
+		}
+		#show{
+			width: 49%;
+			height: 100%;
+			float: right;
+			border: 1px solid black;
+			overflow: scroll;
+		}
+		#ibtn{
+			display: block;
+			clear: all;
+			margin: 0 auto;
+			margin-top: 20px;
+			width: 100px;
+			height: 30px;
+			cursor: pointer;
+			outline: none;			
+		}
+
+	</style>
+</head>
+<body>
+	<div id="mianban">
+		<textarea id="input" placeholder="这里输入代码">
+#include<stdio.h>
+int main(){
+	if(life !=happy){
+		if(GF != null){
+			return GF;
+		}
+	}else{
+		return findNewGF();
+	}	
+}
+		</textarea>
+		<div id="show">
+			<div id="innerShow"></div>
+		</div>
+	</div>
+	<button id="ibtn">开始识别</button>
+
+
+<script type="text/javascript">
+
+//控制窗口高度
+let mianban = document.getElementById('mianban');
+let iHeight= document.documentElement.clientHeight ;
+mianban.style.height = iHeight*(0.7) + 'px';
+
+
+//获取对象
+let ibtn = document.getElementById('ibtn');
+let pattern = document.getElementById('input');
+let show = document.getElementById('innerShow');
+
+ibtn.onclick = function(){
+
+let _data = pattern.value;
+
+let lex = function(str){
+	return str.split('').filter(s => s.length)
+}
+
+const Key_Word_List = ['int','float','string','char','double','return','while','do','if','else','for','break','continue','include','define','void','switch','case','main','NULL','input'];
+const Flag_Word = ['=','+','–','*','/','<','>',';','(',')','#','%',',','!','^','[',']','{','}',':','&','|','$','@','.','"',"'"];
+const _RegExp = /\t|\n/g ;
+_data=_data.replace(_RegExp,'');		//把\t,\n消除
+const target = lex(_data);
+const _length = target.length||0;
+
+let pointer = 0 , temp_pointer = 0 ; 
+let flag = true ;		//当pointer指向target最后一个单词时说明扫完了，此时while停止
+
+let result_collecation = [];		//将识别结果保存到数组输出到网页
+let count = 0;				//标识数组下标
+
+//打印当前单词识别结果
+//flag表示当前单词没错
+let print_result = function(obj,type,other){
+		result_collecation[count++]=other?[type,obj,other]:[type,obj];
+}
+
+//搜索Flag_Word数组，找到则表示当前单词结束(空格点运算符另算)
+let break_word = function(obj){
+	return [].some.call(Flag_Word,function(item){
+		return item === obj;
+	})
+}
+
+
+let search_word_type = function(){
+	let ch = target[pointer];		//当前字符
+	let str = '';			//拼接当前单词
+	let find_success = false;
+	let other;			//输出信息
+
+	//如果是空格,则指针累加
+	if (ch === ' ') {
+		while(ch === ' '){
+			ch = target[++pointer];
+		}
+	//第一个字符为英文字母,它可能是标识符或者变量名		
+	}else if ((ch >= 'a'&&ch<='z')||(ch >= 'A'&&ch<="Z"||(ch == '_'))) {
+		while((ch>='0'&&ch<='9')||(ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch=='_')){
+			str += ch;
+			ch = target[++pointer];
+		}
+
+		//指针
+		//这里.h头文件也归为指针
+		//if else是为了排除string.h这种将string识别为关键字的情况
+		// if (ch === '.') {
+		// 	str+='.';
+		// 	ch = target[++pointer];
+		// 	while((ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')){
+		// 		str += ch;
+		// 		ch = target[++pointer];
+		// 	}
+		// 	find_success = true;
+		// 	print_result(str,'指针');
+		// }else{
+			//关键字
+			for (let i = 0; i < Key_Word_List.length; i++) {
+				if(Key_Word_List[i] == str){
+					find_success = true;
+					print_result(str,'关键字');
+					break;
+				}
+			}				
+		// }
+
+		//变量
+		if(!find_success){
+			print_result(str,'变量');
+		}
+
+	//第一个字符为数字
+	}else if(ch>='0'&&ch<='9'){
+		let _ch = target[++pointer];
+		let _str = '';
+		let num_flag = 0 ;			//进制标志位
+		let num_float = false ;			//小数标志位
+		//一个数字后面跟着符号或空格
+		// a=1 ; 1+;1.2
+		if (_ch === ' '||break_word(_ch)) {
+			str = ''+parseInt(ch).toString(2);
+			if (_ch === '.') {
+				num_float = true;
+				ch = target[++pointer];
+				while(ch>='0'&&ch<='9'){
+					_str += ch;
+					ch = target[++pointer];				
+				}
+				_str = ''+parseInt(_str).toString(2);
+				str = str+'.'+_str;
+			}
+			num_flag = 10;
+		}else{
+			str = ch+_ch ;		//前两个字符先拼接
+			
+			//十六进制
+			if(ch == '0'&& _ch == 'x'){
+				ch = target[++pointer];
+				while((ch>='0'&&ch<='9')||(ch>='A'&&ch<='F')){
+					str += ch;
+					ch = target[++pointer];
+				}
+				str = parseInt(str);
+				num_flag = 16;
+			//八进制
+			}else if (ch == '0'&&(_ch>='0'&&_ch<='7')){
+				ch = target[++pointer];
+				while(ch>='0'&&ch<='7'){
+					str += ch;
+					ch = target[++pointer];				
+				}
+				str = parseInt(str);
+				num_flag = 8;
+			}else if ((ch>'0'&&ch<='9')&&(_ch>='0'&&_ch<='9')){
+				ch = target[++pointer];
+				while(ch>='0'&&ch<='9'){
+					str += ch;
+					ch = target[++pointer];				
+				}
+				//浮点数
+				if (target[pointer] === '.') {
+					num_float = true;
+					str = ''+parseInt(str).toString(2);
+					ch = target[++pointer];
+					while(ch>='0'&&ch<='9'){
+						_str += ch;
+						ch = target[++pointer];				
+					}
+					_str = ''+parseInt(_str).toString(2);
+					str = str+'.'+_str;
+				}else{
+					str = parseInt(str);	
+				}
+				num_flag = 10;		
+			}			
+		}
+
+		if (num_float) {
+			print_result(str,'数字',num_flag);
+		}else{
+			//将数字转化为二进制
+			str = str.toString(2);
+			print_result(str,'数字',num_flag);			
+		}
+	}else{
+		temp_pointer = pointer;
+		let _ch = target[++temp_pointer];		//获取下一个符号
+		let temp_flag = false;
+		str += ch;
+		switch(ch){
+			case '+':if(_ch === ('+'||'=')){str += _ch;pointer++}break;
+			case '-':if(_ch === ('-'||'=')){str += _ch;pointer++}break;
+			case '!':if(_ch === '=') {str+=_ch;pointer++}break;
+			case '<':if(_ch === ('='||'<')) {str+=_ch;pointer++}break;
+			case '>':if(_ch === ('='||'>')) {str+=_ch;pointer++}break;
+			case '=':if (_ch === '=') {str+=_ch;pointer++}break;
+			case '%':if (_ch>'0'&&_ch<'9'||_ch==='.') {
+					pointer++;
+				if (_ch === '.') {
+					str = ch+_ch;			
+					_ch = target[++pointer];
+					while(_ch>='0'&&_ch<'9'){
+						str+=_ch;
+						_ch = target[++pointer];
+					}
+					if(target[pointer]=='f'){
+						str += 'f';
+						pointer++;
+					}
+				}else{
+					while(_ch>='0'&&_ch<'9'){
+						str+=_ch;
+						_ch = target[++pointer];
+					}
+					if(target[pointer]=='d'){
+						str += 'f';
+						pointer++;
+					}					
+				}
+			};break;
+			case "'":
+					temp_flag = true;
+					//找到下一个" ' "时说明字符串查找完成
+					while(_ch !== "'"){	
+						_ch = target[++pointer];
+						str += _ch;
+					};break;
+			case '"':
+					temp_flag = true;
+					//找到下一个' " '时说明字符串查找完成
+					while(_ch !== '"'){
+						_ch = target[++pointer];
+						str += _ch;
+					};break;			
+			case '/':break;
+			case '*':break;
+			case ';':break;
+			case ':':break;
+			case ',':break;
+			case '?':break;
+			case '$':break;
+			case ')':break;
+			case '(':break;
+			case '#':break;
+			case '^':break;
+			case '[':break;
+			case ']':break;
+			case '{':break;
+			case '}':break;
+			case '&':break;
+			case '.':break;
+		}
+		pointer++;
+		if (temp_flag) {
+			print_result(str,'字符串');
+		}else{
+			print_result(str,'符号');			
+		}
+
+	}
+
+	if (pointer >= _length) {
+		flag = false;
+	}	
+}
+
+while(flag){
+	search_word_type();
+}
+
+
+setTimeout(function(){
+	var strresult = '';
+
+	for (var i = 0; i < result_collecation.length; i++) {
+		strresult = strresult  + result_collecation[i].join(' ') + '<br/>'
+	}
+	show.innerHTML = strresult;
+},30);	
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<%include head.ejs%>
+<%
+    artical_id = post[1].id;
+%>
+
+  <script type="text/javascript" src="/javascripts/comment_display.js" defer></script>
+  <script type="text/javascript" src="/javascripts/form.js" defer></script>
+  <script type="text/javascript" src="/javascripts/zan.js" defer></script>
+  <script type="text/javascript" src="/javascripts/share/build/simple-share.min.js" defer></script>
+  <script type="text/javascript" src="/javascripts/share_config.js" defer></script>
+  	<script type="text/javascript"  src="/editor/ueditor.parse.js"></script>
+  <script >
+      //利用Ueditor提供的css渲染页面
+      uParse('#content',{
+        rootPath:'/editor/'
+      })
+  </script>
+  <style>
+      /* 移动端代码显示优化 */
+      .syntaxhighlighter td.code .container{
+        position: relative!important;
+      }
+
+  </style>
+<artical id="artical_detiail">
+  <h1 id="artical_detiail_title"><%=post[1].title%></h1>
+
+  <%if(post[1].tags){
+      for(var j = 0 ; j < post[1].tags.length;j++){
+  %>
+     <a href="/tags/<%=post[1].tags[j]%>" class="tagLink"><%=post[1].tags[j]%></a>
+  <%
+     }
+   }
+  %>
+
+  <p class='artical_other'>发表于<%=post[1].time%></p>
+<%if(post[1].update_time){%>
+  <p class='artical_other'>更新于<%=post[1].update_time%></p>
+<%}%>
+  <p class="artical_other"><%=comment.length%>条评论　<%=_myclicks.click+1%>次阅读</p>
+  <div id="artical_content">
+    <%-post[1].post%>
+  </div>
+
+<div id="ext_zan">
+  <div class="background_id" style="display: none;"><%=post[1].id%></div>
+  <span class="zan">👍 <%=_myclicks.zan%></span>　　<span class="cai">👎 <%=_myclicks.cai%></span>
+</div>
+
+  <div id="share_artical">
+    分享到:
+    <a href="javascript:share.weibo();">weibo</a>
+    <a href="javascript:share.qzone();">qzone</a>
+    <a href="javascript:share.renren();">renren</a>
+    <a href="javascript:share.douban();">douban</a>
+    <a href="javascript:share.facebook();">facebook</a>
+    <a href="javascript:share.twitter();">twitter</a>
+    <a href="javascript:share.linkedin();">linkedin</a>
+  </div>
+  <aside class="last_next_artical">
+<%
+	if(post[0] != 'null'){
+%>
+  	<p><a href="/artical_detiail/<%=post[0].user%>/<%=post[0].id%>" class="up_artical">上一篇: <%=post[0].title%></a></p>
+<%
+	}
+	if(post[2]!='null'){
+%>
+  	<p><a href="/artical_detiail/<%=post[2].user%>/<%=post[2].id%>" class="down_artical">下一篇: <%=post[2].title%></a></p>
+<%
+	}
+%>
+  </aside>
+</artical>
+
+<div class="mytime" style="display: none;"><%=post[1].time%></div>
+<div id="post_brief" style="display: none;"><%=post[1].brief%></div>
+
+<%include artical_comment.ejs%>
+<%include comment_post.ejs%>
+<%include foot.ejs%>
