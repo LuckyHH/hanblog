@@ -1,5 +1,5 @@
 		html {
-			overflow: scroll;
+			overflow-y: scroll;
 			font-size: 14px;
 		}
 		html,body{
@@ -699,6 +699,9 @@
 				margin: 0 auto;
 				margin-top: 17.5vh;
 				float: none;
+			}
+			.rightNav{
+				display: none;
 			}
 
 /* 主页 */

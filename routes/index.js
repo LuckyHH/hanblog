@@ -11,7 +11,6 @@ var Click = require('../models/tips');          //点赞相关
 var format_time = require('../models/format_time');
 var router = express.Router();
 
-var proxy = new events.EventEmitter();
 
 //转发函数
 var after = function(times,ejs,res){
@@ -74,7 +73,7 @@ router.get('/idx/:number',function(req,res,next){
         Post.get(null, function(err, posts) {
             if (err) {
                 req.flash('error', err);
-                return res.redirect('/');
+                return res.redirect('/idx/0');
             }
             status[0] = 'ready';
             emitter.emit('done','posts',posts,'_posts',posts);
@@ -518,31 +517,6 @@ router.get('/all_artical',function(req,res,next){
             emitter.emit('done','_clicks',_clicks);
         });
 });
-
-
-// var after = function(times,ejs,res){
-//         var result = {},count = 0 ;
-//         if(arguments.length > 3){
-//             for (var i = 3; i < arguments.length; i = i + 2) {
-//                 result[arguments[i]] = arguments[i+1];
-//             }
-//         }
-//         return function(key,value){
-//             count++;
-//             if(arguments.length > 2){
-//                 for (var i = 2; i < arguments.length; i = i + 2) {
-//                     result[arguments[i]] = arguments[i+1];
-//                 }
-//             }
-//             result[key] = value ;
-//             if(count === times){
-//               console.log('标志22',Object.keys(result));
-//               console.log('标志33',result._posts.length);
-//               console.log('标志44',ejs);
-//                 res.render(ejs,result);
-//             }
-//         };
-// };
 
 
 router.get('/artical_detiail/:user/:id',function(req,res,next){

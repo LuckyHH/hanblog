@@ -3,9 +3,10 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta charset="utf-8">
-	<meta name="description" content="月光博客（www.docmobile.cn）是一个技术性个人博客。主要包括前端，linux相关，网络知识慢生活感想等内容" />
+	<meta name="description" content="<%if(post){%><%=post[1].brief%><%}else{%>月光博客（www.docmobile.cn）是一个技术性个人博客。主要包括前端，linux相关，网络知识慢生活感想等内容
+	<%}%>"/>
 	<meta name="keywords" content="月光博客,博客,luckyhh,学生,石河子大学,docmobile,前端,JavaScript,linux,生活杂谈,笔记,网络">
-  <title><%=title%>-luckyhh-月光博客</title>
+    <title><%=title%>-luckyhh-月光博客</title>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
 	<script type="text/javascript" src="/javascripts/ku.js"></script>
 	<script type="text/javascript" src="/javascripts/css.js" defer></script>

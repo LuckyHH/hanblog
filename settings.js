@@ -1,5 +1,5 @@
 module.exports = {
-    cookieSecret : '<dbname>',
-    db:'<dbname>',
-    url:'mongodb://localhost:27017/<dbname>'
+    cookieSecret : 'hanblog',
+    db:'hanblog',
+    url:'mongodb://localhost:27017/hanblog'
 };

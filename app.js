@@ -11,7 +11,7 @@ var session = require('express-session');
 var flash = require('connect-flash');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var sitemap = require('./routes/sitemap');
 
 var app = express();
 
@@ -56,9 +56,9 @@ app.use(express.static(path.join(__dirname, 'public'),{maxAge:1000*60*60}));
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/sitemap.xml', sitemap);
 
-
+//UEditor
 app.use("/editor/ue", ueditor(path.join(__dirname, 'public'), function(req, res, next) {
     var imgDir = '/upload/image/plain';
     var ActionType = req.query.action;
