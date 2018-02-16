@@ -1,5 +1,6 @@
 var express = require('express');
 var events = require('events');
+var cookie = require('cookie');
 var router = express.Router();
 var cookieParser = require('cookie-parser');
 var crypto = require('crypto');                     //加密用的
@@ -159,27 +160,30 @@ router.get('/logout', function(req, res) {
     res.redirect('/login');
 });
 
-//当没有登录时，显示
-router.get('/login',checkNotLogin);
-router.get('/login',function(req,res,next){
-  var emitter = new events.EventEmitter();
-  var done = after(2,'login',res,'title','登录');
-  emitter.on('done',done);
 
-  Post.get(null, function(err, posts) {
-      if (err) {
-          req.flash('error', err);
-          return res.redirect('/');
-      }
-      emitter.emit('done','posts',posts,'_posts',posts);
-  });
-  Click.get(null,function(err,_clicks){
-      if (err) {
-          req.flash('error',err);
-          return res.redirect('/idx/0');
-      }
-      emitter.emit('done','_clicks',_clicks);
-  });
+router.get('/login',function(req,res,next){
+  if(req.session.user&&cookie.parse(req.headers.cookie).user&&req.session.user.name==cookie.parse(req.headers.cookie).user){
+    res.redirect('/manage');
+  }else{
+    var emitter = new events.EventEmitter();
+    var done = after(2,'login',res,'title','登录');
+    emitter.on('done',done);
+
+    Post.get(null, function(err, posts) {
+        if (err) {
+            req.flash('error', err);
+            return res.redirect('/idx/0');
+        }
+        emitter.emit('done','posts',posts,'_posts',posts);
+    });
+    Click.get(null,function(err,_clicks){
+        if (err) {
+            req.flash('error',err);
+            return res.redirect('/idx/0');
+        }
+        emitter.emit('done','_clicks',_clicks);
+    });
+  }
 });
 
 router.get('/login',checkNotLogin);
@@ -197,6 +201,7 @@ router.post('/login', function(req, res) {  //生成口令的散列值
         }
         req.session.user = user;
         req.flash('success','登录成功');
+        res.cookie('user',req.session.user.name,{httpOnly:true,maxAge:360000});        
         res.redirect('/manage');
     });
 });
@@ -298,8 +303,6 @@ router.get('/manage',function(req,res,next){
       });
     	res.render('artical_post',{title:'后台',tags:tagList,mytagList:[]});
   });
-
-
 });
 
 router.get('/manage',checkLogin);
