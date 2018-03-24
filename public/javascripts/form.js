@@ -12,9 +12,6 @@
     var isubmit = ku.getByClass('isubmit')[0];
 
 
-function showLogIn(){
-
-}
     isubmit.onclick = function(e){
         var e = EventUtil.getEvent(e);
         var flag = true ;   //标志位，表示用户输入有效
@@ -27,9 +24,7 @@ function showLogIn(){
         };
 
 //用户名和评论内容检测
-        if(comment_name.value == '' || comment_connent.value == ''){
-            showmsg('输入不完整');
-        }else if(comment_name.value == 'null' || comment_name.value == 'undefined'){
+        if(comment_name.value == 'null' || comment_name.value == 'undefined'){
             showmsg('用户名输入不合法');
         }
 // //邮箱检测

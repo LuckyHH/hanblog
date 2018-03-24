@@ -4,13 +4,13 @@
     <h4>发表新评论</h4>
        <p class="has_log_in">Hello : <span class="hello_name"></span><a href="javascript:void(0)" onclick="clearLocalStroge()" style="float:right">清除信息</a></p>
 
-            <input type="text" placeholder="输入你的称呼*" class="comment_name" maxlength="16" name="comment_name">
+            <input type="text" placeholder="输入你的称呼*" class="comment_name" maxlength="16" name="comment_name" required>
 
             <input type="email" placeholder="输入你的邮箱" class="comment_email" maxlength="50" name="comment_email">
 
             <input type="url" placeholder="输入你的带http头的完整的网址(like this : https://www.baidu.com)" class="comment_website" maxlength="50" name="comment_website">
 
-            <textarea placeholder="输入评论内容*" class="comment_connent" name="comment_connent" maxlength="1000"></textarea>
+            <textarea placeholder="输入评论内容*" class="comment_connent" name="comment_connent" maxlength="1000" required></textarea>
 
             <input type="text" name="src_url" id="src_url" value="<%=artical_id%>" style="display: none;">
 

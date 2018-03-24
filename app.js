@@ -25,11 +25,12 @@ app.use(session({
              resave: false,
              saveUninitialized: true,
              cookie: {maxAge:3600000},
-       store: new MongoStore({
-                 db : settings.db,
-                 url : settings.url,
+             store: new MongoStore({
+                       db : settings.db,
+                       url : settings.url,
+                   })
              })
-       }));
+      );
 
 app.use(flash());
 
