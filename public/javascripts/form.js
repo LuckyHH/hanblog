@@ -28,14 +28,14 @@
             showmsg('用户名输入不合法');
         }
 // //邮箱检测
-        if(comment_email.value != ''&&comment_email.value != '#'){
+        if(comment_email.value != '#'){
           if(!/.{3,}@.{2,}\.[com|cn|net]/g.test(comment_email.value)){
             showmsg('邮箱输入不正确');
           }
         }
 
 // //网址检测
-        if (comment_website.value != ''&&comment_website.value != '#'){
+        if (comment_website.value != '#'){
           if (!/http:\/\/.{2,}\..{2,}|https:\/\/.{2,}\..{2,}/g.test(comment_website.value)){
             showmsg('网址输入不正确');
           }
