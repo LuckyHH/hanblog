@@ -2,9 +2,8 @@
 
 一个基于Nodejs,MongoDB的博客系统
 
-##
 
-hanblog有哪些功能？
+## hanblog有哪些功能？
 
 * 方便的`文章编辑`功能
     *  采用UEditor富文本编辑器，方便创作
