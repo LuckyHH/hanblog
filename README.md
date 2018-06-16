@@ -1,7 +1,10 @@
-##hanblog是什么?
+## hanblog是什么?
+
 一个基于Nodejs,MongoDB的博客系统
 
-##hanblog有哪些功能？
+##
+
+hanblog有哪些功能？
 
 * 方便的`文章编辑`功能
     *  采用UEditor富文本编辑器，方便创作
@@ -17,17 +20,20 @@
     *  采用SimpleShare
 * '赞','踩'按钮
 
-##使用方式
+## 使用方式
+
 将项目克隆至本地，安装mongodb数据库,在项目根目录修改settings文件数据库名称，运行npm install命令，运行npm start即可
 
-##有问题反馈
+## 问题反馈
+
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
 
 * 邮件(gotoanything#gmail.com, 把#换成@)
 * QQ: 1391380241
 * weibo: [@LuckyHH](http://weibo.com/LuckyHH)
 
-##感激
+## 感激
+
 感谢以下的项目
 
 * [express](http://www.expressjs.com.cn/)
@@ -37,7 +43,7 @@
 感谢腾讯云提供服务支持
 感谢Heroku,mlab提供支持
 
-##关于作者
+## 关于作者
 
 ```javascript
   var ihubo = {
